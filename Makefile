@@ -1,40 +1,46 @@
 GCC = gcc -Wall -Werror
-LIB = build/add.o build/sub.o build/divv.o build/mul.o
 
 .PHONY: all clean 
 
-all: build lib default
+all: build libs default
 
-lib: libmycomplex.a
+libs: libs/libadd.so libs/libsub.so libs/libdivv.so libs/libmul.so
 
 default: mycomplex
 
-libmycomplex.a: $(LIB)
-	ar rc libmycomplex.a $(LIB)
+mycomplex: src/main.c src/mycomplex.h
+	$(GCC) src/main.c -o mycomplex -ldl
+		
+libs/libadd.so: build/add.o
+	$(GCC) -shared -o libs/libadd.so build/add.o
 
-mycomplex: build/main.o $(LIB)
-	$(GCC) build/main.o -o mycomplex -L. -l mycomplex
+libs/libsub.so: build/sub.o
+	$(GCC) -shared -o libs/libsub.so build/sub.o
+
+libs/libdivv.so: build/divv.o
+	$(GCC) -shared -o libs/libdivv.so build/divv.o
+
+libs/libmul.so: build/mul.o
+	$(GCC) -shared -o libs/libmul.so build/mul.o
 
 build/add.o: src/add.c src/mycomplex.h
-	$(GCC) -c src/add.c -o build/add.o
+	$(GCC) -fPIC -c src/add.c -o build/add.o
 
 build/sub.o: src/sub.c src/mycomplex.h
-	$(GCC) -c src/sub.c -o build/sub.o
+	$(GCC) -fPIC -c src/sub.c -o build/sub.o
 
 build/mul.o: src/mul.c src/mycomplex.h
-	$(GCC) -c src/mul.c -o build/mul.o
+	$(GCC) -fPIC -c src/mul.c -o build/mul.o
 
 build/divv.o: src/divv.c src/mycomplex.h
-	$(GCC) -c src/divv.c -o build/divv.o
-
-build/main.o: src/main.c src/mycomplex.h
-	$(GCC) -c src/main.c -o build/main.o
+	$(GCC) -fPIC -c src/divv.c -o build/divv.o
 
 build:
 	mkdir build
+	mkdir libs
 
 clean: 
-	rm -rf build libmycomplex.a mycomplex
+	rm -rf build libs mycomplex
 
 
 
