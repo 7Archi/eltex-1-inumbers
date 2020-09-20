@@ -14,7 +14,8 @@ int main(int argc, char* argv[])
     void* lib3;
     void* lib4;
     void* (*func)(struct mycomplex *, struct mycomplex *, struct mycomplex *);	
-    while((op!=1)&&(op!=2)&&(op!=3)&&(op!=4)&&(op!=5)){
+    while((op!=1)&&(op!=2)&&(op!=3)&&(op!=4)&&(op!=5))
+    {
 	system("clear");
         printf("Choose the operation\n1 - Add\n2 - Sub\n3 - Mul\n4 - Div\n5 - Quit\n");
         scanf("%d", &op);
@@ -26,7 +27,8 @@ int main(int argc, char* argv[])
     printf("Input B\n");
     scanf("%d%d", &b->real, &b->img);
 
-    if(op==1) {
+    if(op==1) 
+    {
 	lib1 = dlopen("libs/libadd.so", RTLD_LAZY);
 	if(!lib1) 
         {
@@ -39,7 +41,8 @@ int main(int argc, char* argv[])
 	printf("A + B = %d + %di\n", c->real, c->img);
     }
 
-    if(op==2) {
+    if(op==2) 
+    {
 	lib2 = dlopen("libs/libsub.so", RTLD_LAZY);
 	if(!lib2) 
         {
@@ -52,7 +55,8 @@ int main(int argc, char* argv[])
 	printf("A - B = %d + %di\n", c->real, c->img);
     }  
 
-    if(op==3) {
+    if(op==3) 
+    {
 	lib3 = dlopen("libs/libmul.so", RTLD_LAZY);
 	if(!lib3) 
         {
@@ -65,7 +69,8 @@ int main(int argc, char* argv[])
 	printf("A * B = %d + %di\n", c->real, c->img);
     }
 
-    if(op==4) {
+    if(op==4) 
+    {
 	lib4 = dlopen("libs/libdivv.so", RTLD_LAZY);
 	if(!lib4) 
         {
